@@ -38,8 +38,8 @@ floating_modifier $mod
 exec --no-startup-id feh --bg-fill ~/Pictures/space.jpeg
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
-#programs
-bindsym $mod+Shift+f exec firefox
+
+
  
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -47,8 +47,11 @@ bindsym $mod+shift+x exec i3lock -i background.png
 bindsym $mod+u exec rxvt-unicode
 
 #program keys
-bindsym $mod+o mode "$mode_launcher"
-
+bindsym $mod+o exec obs
+bindsym $mod+g exec gimp
+bindsym $mod+Shift+f exec firefox
+bindsym $mod+shift+d exec krita
+bindsym $mod+m exec lmms
 mode "$mode_launcher" {
     bindsym f exec firefox
     bindsym t exec thunderbird
@@ -117,7 +120,7 @@ bindsym $mod+space focus mode_toggle
 bindsym $mod+a focus parent
 
 # focus the child container
-bindsym $mod+d exec rofi -show run -opacity "80" -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575de" -drun-icon-theme
+bindsym $mod+d exec rofi -show run -opacity "80" -bc "$bg-color" -bg "$bg-color" -fg "$text-color" -hlbg "$bg-color" -hlfg "#9575de" -sidebar-mode yes
 
 # switch to workspace
 bindsym $mod+1 workspace 1
