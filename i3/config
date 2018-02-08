@@ -12,7 +12,12 @@
 
 set $mod Mod4
 
-
+gaps inner 3
+gaps outer 3
+bindsym $mod+z			gaps outer current plus 5
+bindsym $mod+Shift+z gaps outer current minus 5
+bindsym $mod+x			gaps inner current plus 5
+bindsym $mod+Shift+x gaps inner current minus 5
 
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -30,12 +35,12 @@ font pango:roboto light 8
 # clear in small sizes. However, its unicode glyph coverage is limited, the old
 # X core fonts rendering does not support right-to-left and this being a bitmap
 # font, it doesn’t scale on retina/hidpi displays.
-        new_window pixel 2
+        new_window pixel 0
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 #set background
-exec --no-startup-id feh --bg-fill ~/Pictures/space.jpeg
+exec --no-startup-id feh --bg-fill ~/Pictures/cascades.jpg
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
@@ -43,7 +48,7 @@ bindsym $mod+Return exec i3-sensible-terminal
  
 # kill focused window
 bindsym $mod+Shift+q kill
-bindsym $mod+shift+x exec i3lock -i background.png
+
 bindsym $mod+u exec rxvt-unicode
 
 #program keys
@@ -184,16 +189,21 @@ exec_always compton
         bindsym Escape mode "default"
 
 #colors
-set $bg-color 	         #2f343f
-set $inactive-bg-color   #f3f4f5
+set $bg-color-t	         #2f343f
+set $inactive-bg-color-t   #f3f4f5
 set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
+set $urgent-bg-color-t     #E53935
+set $bg-color 	         #2f343f
+set $inactive-bg-color   #f3f4f5
+
 set $urgent-bg-color     #E53935
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
+        i3bar_command i3bar -t
         status_command i3status
         tray_output primary
 	position top
@@ -201,9 +211,9 @@ bar {
 		background $bg-color
 	    	separator #757575
 		#                  border             background         text
-		focused_workspace  $bg-color          $bg-color          $text-color
-		inactive_workspace $inactive-bg-color $inactive-bg-color $inactive-text-color
-		urgent_workspace   $urgent-bg-color   $urgent-bg-color   $text-color
+		focused_workspace  $bg-color-t          $bg-color-t          $text-color
+		inactive_workspace $inactive-bg-color-t $inactive-bg-color-t $inactive-text-color-t
+		urgent_workspace   $urgent-bg-color-t   $urgent-bg-color-t   $text-color
 }
         
 }
