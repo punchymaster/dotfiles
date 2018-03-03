@@ -4,7 +4,7 @@
 # Should you change your keyboard layout some time, delete
 # this file and re-run i3-config-wizard(1).
 #
-
+set $term --no-startup-id rxvt-unicode
 
 # i3 config file (v4)
 #
@@ -12,13 +12,12 @@
 
 set $mod Mod4
 
-gaps inner 3
-gaps outer 3
+gaps inner 9
+gaps outer 9
 bindsym $mod+z			gaps outer current plus 5
 bindsym $mod+Shift+z gaps outer current minus 5
 bindsym $mod+x			gaps inner current plus 5
 bindsym $mod+Shift+x gaps inner current minus 5
-
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
@@ -40,11 +39,11 @@ font pango:roboto light 8
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 #set background
-exec --no-startup-id feh --bg-fill ~/Pictures/cascades.jpg
+exec --no-startup-id feh --bg-fill ~/.config/wall.jpg
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
 
-
+bindsym $mod+Shift+s exec shutdown -h now 
  
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -54,20 +53,19 @@ bindsym $mod+u exec rxvt-unicode
 #program keys
 bindsym $mod+o exec obs
 bindsym $mod+g exec gimp
-bindsym $mod+Shift+f exec firefox
+bindsym $mod+Shift+f exec waterfox/waterfox
 bindsym $mod+shift+d exec krita
 bindsym $mod+m exec lmms
-mode "$mode_launcher" {
-    bindsym f exec firefox
-    bindsym t exec thunderbird
-    bindsym k exec krita
-    bindsym x exec xterm
-    bindsym o exec obs
+bindsym $mod+Shift+w exec waterfox/waterfox
+bindsym $mod+Shift+g exec steam
+bindsym $mod+Shift+v exec vlc
+bindsym $mod+Shift+t exec xterm
+bindsym $mod+F11 exec xterm -e cmatrix -C cyan
+bindsym $mod+F1 exec rxvt-unicode -e cmus
+bindsym $mod+F10 exec rxvt-unicode -e ranger
+bindsym $mod+v exec rxvt-unicode -e vim
 
 
-    bindsym Escape mode "default"
-    bindsym Return mode "default"
-}
 
 
 
@@ -79,9 +77,14 @@ mode "$mode_launcher" {
 
 
 #audio
-bindsym $mod+F2 exec --no-startup-id pactl set-sink-volume 1 -5%
-bindsym $mod+F3 exec --no-startup-id pactl set-sink-volume 1 +5%
-bindsym $mod+F4 exec --no-startup-id pactl set-sink-mute 1 toggle
+bindsym $mod+F2 exec --no-startup-id pactl set-sink-volume 1 -5% &&  --no-startup-id pactl set-sink-volume 2 -5% &&  --no-startup-id pactl set-sink-volume 3 -5% &&  --no-startup-id pactl set-sink-volume 4 -5%
+bindsym $mod+F3 exec --no-startup-id pactl set-sink-volume 1 +5% &&  --no-startup-id pactl set-sink-volume 2 +5% &&  --no-startup-id pactl set-sink-volume 3 +5% &&  --no-startup-id pactl set-sink-volume 4 +5%
+bindsym $mod+F4 exec --no-startup-id pactl set-sink-mute 1 toggle && --no-startup-id pactl set-sink-mute 2 toggle && --no-startup-id pactl set-sink-mute 3 toggle %%  --no-startup-id pactl set-sink-mute 4 toggle 
+bindsym $mod+shift+F2 exec --no-startup-id pactl set-sink-volume 3 -5%
+bindsym $mod+shift+F3 exec --no-startup-id pactl set-sink-volume 3 +5%
+bindsym $mod+shift+F4 exec --no-startup-id pactl set-sink-mute 3 toggle
+
+
 
 # change focus
 bindsym $mod+j focus left
@@ -100,19 +103,12 @@ bindsym $mod+Shift+semicolon move right
 
 # alternatively, you can use the cursor keys:
 
-# split in horizontal orientation
-bindsym $mod+h split h
-
-# split in vertical orientation
-bindsym $mod+v split v
-
-
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
+bindsym $mod+t layout tabbed
 bindsym $mod+e layout toggle split
 
 # toggle tiling / floating
@@ -167,19 +163,20 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 # resize window (you can also use the mouse for that)
 bindsym $mod+r mode "resize"
 
+exec_always --no-startup-id ~/Python/launch.sh
+exec_always --no-startup-id conky
 
 
-
-bindsym $mod+Shift+y		resize shrink width 10 px or 10ppt
-
-
-bindsym $mod+Shift+u		resize shrink height 10 px or 10 ppt
+bindsym $mod+Shift+h		resize shrink width 10 px or 10ppt
 
 
-bindsym $mod+Shift+i		resize grow height 10 px or 10 ppt
+bindsym $mod+Shift+i		resize shrink height 10 px or 10 ppt
 
 
-bindsym $mod+Shift+o		resize grow width 10 px or 10 ppt
+bindsym $mod+Shift+o		resize grow height 10 px or 10 ppt
+
+
+bindsym $mod+Shift+p		resize grow width 10 px or 10 ppt
 
 exec_always compton
 
@@ -189,31 +186,37 @@ exec_always compton
         bindsym Escape mode "default"
 
 #colors
-set $bg-color-t	         #2f343f
+set $bg-color-t	         #2f343f00
 set $inactive-bg-color-t   #f3f4f5
 set $text-color          #f3f4f5
 set $inactive-text-color #676E7D
 set $urgent-bg-color-t     #E53935
 set $bg-color 	         #2f343f
 set $inactive-bg-color   #f3f4f5
-
 set $urgent-bg-color     #E53935
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
+# finds out, if available
 bar {
         i3bar_command i3bar -t
         status_command i3status
         tray_output primary
-	position top
-	colors {
-		background $bg-color
-	    	separator #757575
-		#                  border             background         text
-		focused_workspace  $bg-color-t          $bg-color-t          $text-color
-		inactive_workspace $inactive-bg-color-t $inactive-bg-color-t $inactive-text-color-t
-		urgent_workspace   $urgent-bg-color-t   $urgent-bg-color-t   $text-color
+        position top
+        colors {
+                background $bg-color-t
+                separator #ffffff
+                #                  border             background         text
+                focused_workspace  $bg-color-t          $bg-color-t          $text-color
+                inactive_workspace $inactive-bg-color-t $inactive-bg-color-t $inactive-text-color-t
+                urgent_workspace   $urgent-bg-color-t   $urgent-bg-color-t   $text-color
 }
-        
+
 }
+
+
+
+
+
+
+
